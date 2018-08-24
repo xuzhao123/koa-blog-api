@@ -7,7 +7,7 @@ addons:
   ssh_known_hosts: 140.143.170.28
 before_install:
 - openssl aes-256-cbc -K $encrypted_50c4522e7c95_key -iv $encrypted_50c4522e7c95_iv
-  -in server.enc -out ~/.ssh/server -d
+  -in server.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
 after_success:
 - ssh $SERVER_USER@$SERVER_IP "sh ~/www/api.sh"
