@@ -1,0 +1,13 @@
+# System Files
+.DS_Store
+Thumbs.db
+.vscode
+
+package-lock.json
+
+# compile output
+dist
+logs
+
+# modules
+node_modules

@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- '8'
+install: npm install
+script: true
+addons:
+  ssh_known_hosts: 140.143.170.28
+after_success:
+- ssh $SERVER_USER@$SERVER_IP "sh ~/www/deploy.sh"
+branches:
+  only:
+  - master

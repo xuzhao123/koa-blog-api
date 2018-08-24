@@ -1,0 +1,22 @@
+{
+    "name": "blog",
+    "script": "./dist/index.js",
+    "cwd": "./",
+    "watch": [
+        "dist"
+    ],
+    "ignore_watch": [
+        "node_modules"
+    ],
+    "watch_options": {
+        "followSymlinks": false
+    },
+    "error_file": "./logs/app-err.log",
+    "out_file": "./logs/app-out.log",
+    "env": {
+        "NODE_ENV": "production"
+    },
+    "env_dev": {
+        "NODE_ENV": "development"
+    }
+}
