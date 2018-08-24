@@ -5,8 +5,15 @@ install: npm install
 script: true
 addons:
   ssh_known_hosts: 140.143.170.28
+before_install:
+- openssl aes-256-cbc -K $encrypted_50c4522e7c95_key -iv $encrypted_50c4522e7c95_iv
+  -in server.enc -out ~/.ssh/server -d
+- chmod 600 ~/.ssh/id_rsa
 after_success:
-- ssh $SERVER_USER@$SERVER_IP "sh ~/www/deploy.sh"
+- ssh $SERVER_USER@$SERVER_IP "sh ~/www/api.sh"
 branches:
   only:
   - master
+env:
+  global:
+    secure: oHOgKDUj0j1LQok3W0Cq4gyljoG82ejImKNR7VAmw/y6tCJO25cOQgufBpGXHQxcgvqmv6noXHq1rREqsCSRGemprVwwJdD7keJFXjip3o5iwvOVAGdJd16lnMiDIikfU7p+ApEcQe/Zw6nbZ7SnUgWdSGpcZgo/OoEQ+7EljbzdHPL4DPAQFX3QtBtwiaBX1BkwQWpkap2YO1McQ70JOMg8DQSbrtKHK06UK3qG3UBjN3yVbNLCE6m1BkNj9mSFKH+Hct7P38j9s6Sd1fXbKvzLxLVy35JjYxxmvAA6wL7FfUo5Np7IVeFNbk8Es+TaPyKxEc+ztG0No5CaxyetUyOfPEODAZEUDyxvcfG6jqkkx10HTff/jszu+SV850pSPxDo1KL6GDEMSr4bHrFRhD7bPsh63baq5hnrobeGa7JWsNmvhqpr/+BDCeUWH+EW+i27osTJeFV5muuoCDkjAtfUTlu7TwIUcZJ2h04JepfAEZXCBpFGFLciAykXYEPyAr9G+fo/Cdh037pAuFqx/gyqoCv8YodWDi9fv0fJ9BBMnxj0F/x6lVJFXlfOTbDbgWLo3ilQytRpsR8HmWfQMLu7gjwWILKyMe1YSxkmIW+flGXgNHJdieTCPhXGhPGenl3sgpRkK39Ia9t+Q9f2ilnhT2K7q7Idur/gKb8nhcI=
