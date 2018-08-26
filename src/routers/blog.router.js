@@ -7,7 +7,7 @@ const blogRouter = new Router({
 
 for (var key in BlogController) {
 	const api = BlogController[key];
-	blogRouter[api.type](`/${key}`, api);
+	blogRouter[api.method](`${api.url}`, api);
 }
 
 export { blogRouter }

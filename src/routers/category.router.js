@@ -7,7 +7,7 @@ const categoryRouter = new Router({
 
 for (let key in CategoryController) {
 	const api = CategoryController[key];
-	categoryRouter[api.type](`/${key}`, api);
+	categoryRouter[api.method](`${api.url}`, api);
 }
 
 export { categoryRouter }

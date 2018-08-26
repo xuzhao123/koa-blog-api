@@ -25,7 +25,3 @@ export function mkdirsSync(dirname) {
 		}
 	}
 }
-
-mkdirs('hello/a/b/c', () => {
-	console.log('done');
-})

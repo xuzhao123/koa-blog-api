@@ -22,6 +22,8 @@ app
 
 routing(app);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
 	console.log(`running on port ${port}`);
 });
+
+export { server }
