@@ -3,6 +3,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import { blogPath } from '../config';
 import { mkdirs } from '../utils/mkdirs';
+import { blogDecorator } from '../utils/decorator';
 
 const { Schema } = mongoose;
 
@@ -25,21 +26,13 @@ const blogSchema = new Schema(
 	}
 );
 
-// function blog(target, name, descriptor) {
-// 	const oldValue = descriptor.value;
-// 	descriptor.value = function(...args){
-// 		const result = oldValue(...args);
-// 		return result;
-// 	};
-// }
-
 class BlogClass {
 
 	/**
 	 * 添加博客
 	 * @param {*} blog
 	 */
-	//@blog
+	@blogDecorator('add')
 	static addBlog(blog) {
 		return new BlogModel(blog).save();
 	}
@@ -48,6 +41,7 @@ class BlogClass {
 	 * 删除博客
 	 * @param {*} id
 	 */
+	@blogDecorator('delete')
 	static deleteBlog(id) {
 		return BlogModel.findByIdAndRemove(id);
 	}
@@ -71,6 +65,7 @@ class BlogClass {
 	 * @param {string} id
 	 * @param {*} blog
 	 */
+	@blogDecorator('update')
 	static updateBlog(id, blog) {
 		return BlogModel.findByIdAndUpdate(id, blog);
 	}

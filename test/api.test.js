@@ -11,7 +11,7 @@ const blog = 'blog';
 function asyncDone(cb) {
 	setTimeout(function () {
 		cb();
-	}, 100)
+	}, 3000)
 }
 
 describe('api', () => {
@@ -70,7 +70,7 @@ describe('api', () => {
 				.expect(200);
 		});
 
-		it('add', async () => {
+		it('add', async (done) => {
 			await request
 				.post(`${routePrefix}/${category}/category`)
 				.set('Accept', 'application/json')
@@ -93,10 +93,11 @@ describe('api', () => {
 				.expect(200)
 				.then(res => {
 					temp.blogId = res.body.data._id;
+					asyncDone(done)
 				})
 		});
 
-		it('update', async () => {
+		it('update', async (done) => {
 			await request
 				.put(`${routePrefix}/${blog}/blog/${temp.blogId}`)
 				.set('Accept', 'application/json')
@@ -104,7 +105,10 @@ describe('api', () => {
 					title: '测试update',
 					blog: '测试update',
 				})
-				.expect(200);
+				.expect(200)
+				.then(res => {
+					asyncDone(done);
+				})
 		});
 
 		it('get', async () => {
