@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { blogPath } from '../config';
+import { blogPath, env } from '../config';
 import { mkdirs } from './mkdirs';
 import { stringifyTime } from './timeHelper';
 import { exec } from 'child_process';
@@ -19,8 +19,12 @@ ${blog.blog}
 }
 
 export function publishBlog() {
+	console.log(env);
+	if (env === 'test') {
+		return Promise.resolve();
+	}
 	return new Promise((resolve, reject) => {
-		exec('ls && sh publish.sh', (error, stdout, stderr) => {
+		exec('sh publish.sh', (error, stdout, stderr) => {
 			console.log(`${stdout}`);
 			console.log(`${stderr}`);
 			if (error !== null) {
