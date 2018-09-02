@@ -114,9 +114,9 @@ describe('api', () => {
 				.expect(200);
 		});
 
-		it('delete', async () => {
+		it('getBlogsByCategoryId', async () => {
 			await request
-				.delete(`${routePrefix}/${blog}/${temp.blogId}`)
+				.get(`${routePrefix}/${blog}/getBlogsByCategoryId/${temp.categoryId}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
@@ -128,9 +128,14 @@ describe('api', () => {
 				.expect(200);
 		});
 
-		it('getBlogsByCategoryId', async () => {
+		it('delete', async () => {
 			await request
-				.get(`${routePrefix}/${blog}/getBlogsByCategoryId/${temp.categoryId}`)
+				.delete(`${routePrefix}/${blog}/${temp.blogId}`)
+				.set('Accept', 'application/json')
+				.expect(200);
+
+			await request
+				.delete(`${routePrefix}/${category}/${temp.categoryId}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
