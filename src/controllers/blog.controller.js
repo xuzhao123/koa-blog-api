@@ -5,52 +5,6 @@ import { errorHandle } from '../utils/errorHandle';
 export class BlogController {
 
 	/**
-	 * 添加博客
-	 * @param {*} ctx
-	 * body:{
-	 * 	title,
-	 *  blog,
-	 *  category
-	 * }
-	 */
-	@methodDecorator('post')
-	@urlDecorator('/blog')
-	static async add(ctx) {
-		try {
-			const data = await BlogModel.addBlog(ctx.request.body);
-			ctx.status = 200;
-			ctx.body = {
-				data,
-				message: '操作成功'
-			};
-		} catch (err) {
-			errorHandle(ctx, err);
-		}
-	}
-
-	/**
-	 * 删除博客
-	 * @param {*} ctx
-	 */
-	@methodDecorator('delete')
-	@urlDecorator('/blog/:id')
-	static async delete(ctx) {
-		try {
-			const { id } = ctx.params;
-			const blog = await BlogModel.deleteBlog(id);
-			if (!blog) {
-				ctx.throw(404);
-			}
-			ctx.status = 200;
-			ctx.body = {
-				message: '操作成功'
-			};
-		} catch (err) {
-			errorHandle(ctx, err);
-		}
-	}
-
-	/**
 	 * 删除所有博客
 	 * @param {c} ctx
 	 */
@@ -62,64 +16,6 @@ export class BlogController {
 			ctx.status = 200;
 			ctx.body = {
 				message: '操作成功'
-			};
-		} catch (err) {
-			errorHandle(ctx, err);
-		}
-	}
-
-	/**
-	 * 更新博客
-	 * @param {*} ctx
-	 */
-	@methodDecorator('put')
-	@urlDecorator('/blog/:id')
-	static async update(ctx) {
-		try {
-			const { body } = ctx.request;
-			const { id } = ctx.params;
-			const data = await BlogModel.updateBlog(id, body);
-			ctx.status = 200;
-			ctx.body = {
-				data,
-				message: '操作成功'
-			};
-		} catch (err) {
-			errorHandle(ctx, err);
-		}
-	}
-
-	/**
-	 * 获取博客
-	 * @param {*} ctx
-	 */
-	@methodDecorator('get')
-	@urlDecorator('/blog/:id')
-	static async get(ctx) {
-		try {
-			const { id } = ctx.params;
-			const data = await BlogModel.getBlogById(id);
-			ctx.status = 200;
-			ctx.body = {
-				data: data
-			};
-		} catch (err) {
-			errorHandle(ctx, err);
-		}
-	}
-
-	/**
-	 * 获取博客列表 TOTO分页
-	 * @param {*} ctx
-	 */
-	@methodDecorator('get')
-	@urlDecorator('/blog')
-	static async list(ctx) {
-		try {
-			const data = await BlogModel.getBlogs();
-			ctx.status = 200;
-			ctx.body = {
-				data: data
 			};
 		} catch (err) {
 			errorHandle(ctx, err);
@@ -171,6 +67,110 @@ export class BlogController {
 			ctx.status = 200;
 			ctx.body = {
 				message: '操作成功'
+			};
+		} catch (err) {
+			errorHandle(ctx, err);
+		}
+	}
+
+	/**
+	 * 添加博客
+	 * @param {*} ctx
+	 * body:{
+	 * 	title,
+	 *  blog,
+	 *  category
+	 * }
+	 */
+	@methodDecorator('post')
+	@urlDecorator('/')
+	static async add(ctx) {
+		try {
+			const data = await BlogModel.addBlog(ctx.request.body);
+			ctx.status = 200;
+			ctx.body = {
+				data,
+				message: '操作成功'
+			};
+		} catch (err) {
+			errorHandle(ctx, err);
+		}
+	}
+
+	/**
+	 * 删除博客
+	 * @param {*} ctx
+	 */
+	@methodDecorator('delete')
+	@urlDecorator('/:id')
+	static async delete(ctx) {
+		try {
+			const { id } = ctx.params;
+			const blog = await BlogModel.deleteBlog(id);
+			if (!blog) {
+				ctx.throw(404);
+			}
+			ctx.status = 200;
+			ctx.body = {
+				message: '操作成功'
+			};
+		} catch (err) {
+			errorHandle(ctx, err);
+		}
+	}
+
+	/**
+	 * 更新博客
+	 * @param {*} ctx
+	 */
+	@methodDecorator('put')
+	@urlDecorator('/:id')
+	static async update(ctx) {
+		try {
+			const { body } = ctx.request;
+			const { id } = ctx.params;
+			const data = await BlogModel.updateBlog(id, body);
+			ctx.status = 200;
+			ctx.body = {
+				data,
+				message: '操作成功'
+			};
+		} catch (err) {
+			errorHandle(ctx, err);
+		}
+	}
+
+	/**
+	 * 获取博客
+	 * @param {*} ctx
+	 */
+	@methodDecorator('get')
+	@urlDecorator('/:id')
+	static async get(ctx) {
+		try {
+			const { id } = ctx.params;
+			const data = await BlogModel.getBlogById(id);
+			ctx.status = 200;
+			ctx.body = {
+				data: data
+			};
+		} catch (err) {
+			errorHandle(ctx, err);
+		}
+	}
+
+	/**
+	 * 获取博客列表 TOTO分页
+	 * @param {*} ctx
+	 */
+	@methodDecorator('get')
+	@urlDecorator('/')
+	static async list(ctx) {
+		try {
+			const data = await BlogModel.getBlogs();
+			ctx.status = 200;
+			ctx.body = {
+				data: data
 			};
 		} catch (err) {
 			errorHandle(ctx, err);

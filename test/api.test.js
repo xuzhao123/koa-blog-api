@@ -19,14 +19,14 @@ describe('api', () => {
 
 		it('list', async () => {
 			await request
-				.get(`${routePrefix}/${category}/category`)
+				.get(`${routePrefix}/${category}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
 
 		it('add', async () => {
 			await request
-				.post(`${routePrefix}/${category}/category`)
+				.post(`${routePrefix}/${category}`)
 				.set('Accept', 'application/json')
 				.send({
 					name: '分类' + +new Date(),
@@ -39,7 +39,7 @@ describe('api', () => {
 
 		it('update', async () => {
 			await request
-				.put(`${routePrefix}/${category}/category/${temp.categoryId}`)
+				.put(`${routePrefix}/${category}/${temp.categoryId}`)
 				.set('Accept', 'application/json')
 				.send({
 					name: '分类' + +new Date(),
@@ -49,14 +49,14 @@ describe('api', () => {
 
 		it('get', async () => {
 			await request
-				.get(`${routePrefix}/${category}/category/${temp.categoryId}`)
+				.get(`${routePrefix}/${category}/${temp.categoryId}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
 
 		it('delete', async () => {
 			await request
-				.delete(`${routePrefix}/${category}/category/${temp.categoryId}`)
+				.delete(`${routePrefix}/${category}/${temp.categoryId}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
@@ -65,14 +65,14 @@ describe('api', () => {
 	describe('blog', () => {
 		it('list', async () => {
 			await request
-				.get(`${routePrefix}/${blog}/blog`)
+				.get(`${routePrefix}/${blog}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
 
 		it('add', async () => {
 			await request
-				.post(`${routePrefix}/${category}/category`)
+				.post(`${routePrefix}/${category}`)
 				.set('Accept', 'application/json')
 				.send({
 					name: '分类' + +new Date(),
@@ -83,7 +83,7 @@ describe('api', () => {
 				});
 
 			await request
-				.post(`${routePrefix}/${blog}/blog`)
+				.post(`${routePrefix}/${blog}`)
 				.set('Accept', 'application/json')
 				.send({
 					title: '测试',
@@ -98,7 +98,7 @@ describe('api', () => {
 
 		it('update', async () => {
 			await request
-				.put(`${routePrefix}/${blog}/blog/${temp.blogId}`)
+				.put(`${routePrefix}/${blog}/${temp.blogId}`)
 				.set('Accept', 'application/json')
 				.send({
 					title: '测试update',
@@ -109,28 +109,28 @@ describe('api', () => {
 
 		it('get', async () => {
 			await request
-				.get(`${routePrefix}/${blog}/blog/${temp.blogId}`)
+				.get(`${routePrefix}/${blog}/${temp.blogId}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
 
 		it('delete', async () => {
 			await request
-				.delete(`${routePrefix}/${blog}/blog/${temp.blogId}`)
+				.delete(`${routePrefix}/${blog}/${temp.blogId}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
 
 		it('getRecentBlogs', async () => {
 			await request
-				.get(`${routePrefix}/blog/getRecentBlogs`)
+				.get(`${routePrefix}/${blog}/getRecentBlogs`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
 
 		it('getBlogsByCategoryId', async () => {
 			await request
-				.get(`${routePrefix}/blog/getBlogsByCategoryId/${temp.categoryId}`)
+				.get(`${routePrefix}/${blog}/getBlogsByCategoryId/${temp.categoryId}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});

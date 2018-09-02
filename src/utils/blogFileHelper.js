@@ -19,7 +19,6 @@ ${blog.blog}
 }
 
 export function publishBlog() {
-	console.log(env);
 	if (env === 'test') {
 		return Promise.resolve();
 	}
