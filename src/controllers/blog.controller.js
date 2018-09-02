@@ -46,10 +46,9 @@ export class BlogController {
 	 */
 	@methodDecorator('get')
 	@urlDecorator('/getBlogsByCategoryId/:id')
-	static async getBlogsByCategoryId(ctx) {
-		try {console.log(id,22222);
+	static async getBlogsByCategory(ctx) {
+		try {
 			const { id } = ctx.params;
-			console.log(id,11111);
 			const data = await BlogModel.getBlogsByCategoryId(id);
 			ctx.status = 200;
 			ctx.body = {
