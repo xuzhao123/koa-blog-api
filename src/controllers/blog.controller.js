@@ -47,9 +47,28 @@ export class BlogController {
 	@methodDecorator('get')
 	@urlDecorator('/getBlogsByCategoryId/:id')
 	static async getBlogsByCategoryId(ctx) {
-		try {
+		try {console.log(id,22222);
 			const { id } = ctx.params;
+			console.log(id,11111);
 			const data = await BlogModel.getBlogsByCategoryId(id);
+			ctx.status = 200;
+			ctx.body = {
+				data: data
+			};
+		} catch (err) {
+			errorHandle(ctx, err);
+		}
+	}
+
+	/**
+	 * 根据分类获取博客列表
+	 * @param {*} ctx
+	 */
+	@methodDecorator('get')
+	@urlDecorator('/getBlogsByCategoryId')
+	static async getBlogsByCategoryId(ctx) {
+		try {
+			const data = await BlogModel.getBlogsByCategoryId();
 			ctx.status = 200;
 			ctx.body = {
 				data: data
