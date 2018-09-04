@@ -7,6 +7,7 @@ const request = supertest.agent(server);
 const temp = {};
 const category = 'category';
 const blog = 'blog';
+const admin = 'admin';
 
 function asyncDone(cb) {
 	setTimeout(function () {
@@ -15,6 +16,17 @@ function asyncDone(cb) {
 }
 
 describe('api', () => {
+
+	it('login', async () => {
+		await request
+			.post(`${routePrefix}/${admin}/login`)
+			.set('Accept', 'application/json')
+			.expect(200)
+			.then(res => {
+				temp.token = res.body.data.token;
+			});
+	});
+
 	describe('category', () => {
 
 		it('list', async () => {
@@ -28,6 +40,7 @@ describe('api', () => {
 			await request
 				.post(`${routePrefix}/${category}`)
 				.set('Accept', 'application/json')
+				.set('Authorization', `Bearer ${temp.token}`)
 				.send({
 					name: '分类' + +new Date(),
 				})
@@ -41,6 +54,7 @@ describe('api', () => {
 			await request
 				.put(`${routePrefix}/${category}/${temp.categoryId}`)
 				.set('Accept', 'application/json')
+				.set('Authorization', `Bearer ${temp.token}`)
 				.send({
 					name: '分类' + +new Date(),
 				})
@@ -57,6 +71,7 @@ describe('api', () => {
 		it('delete', async () => {
 			await request
 				.delete(`${routePrefix}/${category}/${temp.categoryId}`)
+				.set('Authorization', `Bearer ${temp.token}`)
 				.set('Accept', 'application/json')
 				.expect(200);
 		});
@@ -74,6 +89,7 @@ describe('api', () => {
 			await request
 				.post(`${routePrefix}/${category}`)
 				.set('Accept', 'application/json')
+				.set('Authorization', `Bearer ${temp.token}`)
 				.send({
 					name: '分类' + +new Date(),
 				})
@@ -85,6 +101,7 @@ describe('api', () => {
 			await request
 				.post(`${routePrefix}/${blog}`)
 				.set('Accept', 'application/json')
+				.set('Authorization', `Bearer ${temp.token}`)
 				.send({
 					title: '测试',
 					blog: '测试',
@@ -100,6 +117,7 @@ describe('api', () => {
 			await request
 				.put(`${routePrefix}/${blog}/${temp.blogId}`)
 				.set('Accept', 'application/json')
+				.set('Authorization', `Bearer ${temp.token}`)
 				.send({
 					title: '测试update',
 					blog: '测试update',
@@ -132,11 +150,13 @@ describe('api', () => {
 			await request
 				.delete(`${routePrefix}/${blog}/${temp.blogId}`)
 				.set('Accept', 'application/json')
+				.set('Authorization', `Bearer ${temp.token}`)
 				.expect(200);
 
 			await request
 				.delete(`${routePrefix}/${category}/${temp.categoryId}`)
 				.set('Accept', 'application/json')
+				.set('Authorization', `Bearer ${temp.token}`)
 				.expect(200);
 		});
 	});
