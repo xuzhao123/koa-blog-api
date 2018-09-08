@@ -23,7 +23,7 @@ export class AdminController {
 					}
 				};
 			} else {
-				ctx.status = 200;
+				ctx.status = 401;
 				ctx.body = {
 					error: '登录失败',
 				};
