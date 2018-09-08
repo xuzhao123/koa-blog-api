@@ -7,7 +7,8 @@
     "build": "rimraf dist/ && babel ./src --out-dir dist/",
     "start": "npm run build && cross-env NODE_ENV=production node dist/index.js",
     "server": "npm run build && pm2 start pm2.json --env production",
-    "test": "cross-env NODE_ENV=test jest --forceExit"
+	"test": "cross-env NODE_ENV=test jest --forceExit",
+	"docker":"cross-env NODE_ENV=production node dist/index.js"
   },
   "author": "",
   "license": "ISC",
