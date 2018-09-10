@@ -35,6 +35,7 @@ export function errorHandle(ctx, error) {
 
 	ctx.status = 500;
 	ctx.body = {
-		error: '服务器内部错误'
+		error: '服务器内部错误',
+		error_message: error
 	};
 }
