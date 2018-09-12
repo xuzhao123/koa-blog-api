@@ -8,11 +8,18 @@ import { exec } from 'child_process';
 const dirPath = path.resolve(blogPath);
 
 function getBlogString(blog, category = blog.category, date = new Date()) {
+	let tagString = '';
+	if (blog.tags) {
+		blog.tags.forEach(tag => {
+			tagString += '- ' + tag + '\n';
+		});
+	}
 	return `---
 title: ${blog.title}
 date: ${stringifyTime(date)}
 category: ${category}
 tags:
+${tagString}
 ---
 ${blog.blog}
 `;
@@ -49,13 +56,15 @@ export async function addBlog(blog) {
 }
 
 export async function updateBlog(oldBlog, newBlog) {
-	const oldFilePath = path.resolve(dirPath, oldBlog.title + '.md');
-	await new Promise((resolve, reject) => {
-		fs.unlink(oldFilePath, (err) => {
-			if (err) reject(err);
-			resolve();
+	if (oldBlog.title !== newBlog.title) {
+		const oldFilePath = path.resolve(dirPath, oldBlog.title + '.md');
+		await new Promise((resolve, reject) => {
+			fs.unlink(oldFilePath, (err) => {
+				if (err) reject(err);
+				resolve();
+			});
 		});
-	});
+	}
 
 	const filePath = path.resolve(dirPath, newBlog.title + '.md');
 	await new Promise((resolve, reject) => {

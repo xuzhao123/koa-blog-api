@@ -2,7 +2,7 @@ import jsonwebtoken from 'jsonwebtoken'
 
 import { methodDecorator, urlDecorator } from '../utils/decorator';
 import { errorHandle } from '../utils/errorHandle';
-import { secret, env } from '../config';
+import { secret, env, jwtTimeout } from '../config';
 
 
 export class AdminController {
@@ -17,9 +17,10 @@ export class AdminController {
 				ctx.body = {
 					message: '登录成功',
 					data: {
+						expires: +new Date() + jwtTimeout * 1000,
 						token: jsonwebtoken.sign({
 							data: body.username
-						}, secret, { expiresIn: 60 * 60 })
+						}, secret, { expiresIn: jwtTimeout })
 					}
 				};
 			} else {

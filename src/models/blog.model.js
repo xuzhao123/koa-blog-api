@@ -11,6 +11,11 @@ const blogSchema = new Schema(
 	{
 		title: String,
 		blog: String,
+		tags: [
+			{
+				type: String
+			}
+		],
 		category: {
 			type: Schema.Types.ObjectId,
 			ref: 'Category'

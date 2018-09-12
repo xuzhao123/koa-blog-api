@@ -25,11 +25,13 @@ const blogHandle = {
 	add: (target, property, descriptor) => {
 		const oldValue = descriptor.value;
 		descriptor.value = async function (blog) {
-			setTimeout(async () => {
-				const category = await CategoryModel.findById(blog.category);
-				blog.category = category.name;
-				addBlog(blog);
-			});
+			if (blog.publish) {
+				setTimeout(async () => {
+					const category = await CategoryModel.findById(blog.category);
+					blog.category = category.name;
+					addBlog(blog);
+				});
+			}
 			return oldValue.call(this, blog);
 		};
 
@@ -39,11 +41,13 @@ const blogHandle = {
 	update: (target, property, descriptor) => {
 		const oldValue = descriptor.value;
 		descriptor.value = async function (id, blog) {
-			const oldBlog = await BlogModel.getBlogById(id);
-			setTimeout(async () => {
-				const newBlog = await BlogModel.getBlogById(id);
-				updateBlog(oldBlog, newBlog);
-			});
+			if (blog.publish) {
+				const oldBlog = await BlogModel.getBlogById(id);
+				setTimeout(async () => {
+					const newBlog = await BlogModel.getBlogById(id);
+					updateBlog(oldBlog, newBlog);
+				});
+			}
 			return oldValue.call(this, id, blog);
 		};
 		return descriptor;
