@@ -105,7 +105,8 @@ describe('api', () => {
 				.send({
 					title: '测试',
 					blog: '测试',
-					category: temp.categoryId
+					category: temp.categoryId,
+					publish: true
 				})
 				.expect(200)
 				.then(res => {
@@ -121,6 +122,7 @@ describe('api', () => {
 				.send({
 					title: '测试update',
 					blog: '测试update',
+					publish: true
 				})
 				.expect(200);
 		});

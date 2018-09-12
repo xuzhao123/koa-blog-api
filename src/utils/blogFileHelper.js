@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { blogPath, env } from '../config';
-import { mkdirs } from './mkdirs';
-import { stringifyTime } from './timeHelper';
 import { exec } from 'child_process';
+import { blogPath, env } from '../config';
+import { stringifyTime } from './timeHelper';
+import { exists, unlink, writeFile, stat, mkdirs } from './promisify';
 
 const dirPath = path.resolve(blogPath);
 
@@ -29,6 +29,7 @@ export function publishBlog() {
 	if (env === 'test') {
 		return Promise.resolve();
 	}
+
 	return new Promise((resolve, reject) => {
 		exec('sh publish.sh', (error, stdout, stderr) => {
 			console.log(`${stdout}`);
@@ -43,14 +44,9 @@ export function publishBlog() {
 
 export async function addBlog(blog) {
 	const filePath = path.resolve(dirPath, blog.title + '.md');
-	await new Promise((resolve, reject) => {
-		mkdirs(dirPath, () => {
-			fs.writeFile(filePath, getBlogString(blog), (err) => {
-				if (err) reject();
-				resolve();
-			});
-		});
-	});
+
+	await mkdirs(dirPath);
+	await writeFile(filePath);
 
 	return publishBlog();
 }
@@ -58,35 +54,22 @@ export async function addBlog(blog) {
 export async function updateBlog(oldBlog, newBlog) {
 	if (oldBlog.title !== newBlog.title) {
 		const oldFilePath = path.resolve(dirPath, oldBlog.title + '.md');
-		await new Promise((resolve, reject) => {
-			fs.unlink(oldFilePath, (err) => {
-				if (err) reject(err);
-				resolve();
-			});
-		});
+		await unlink(oldFilePath);
 	}
 
 	const filePath = path.resolve(dirPath, newBlog.title + '.md');
-	await new Promise((resolve, reject) => {
-		mkdirs(dirPath, () => {
-			fs.writeFile(filePath, getBlogString(newBlog, newBlog.category.name, newBlog.birthtime), (err) => {
-				if (err) reject();
-				resolve();
-			});
-		});
-	});
+	await mkdirs(dirPath);
+	await writeFile(filePath);
 
 	return publishBlog();
 }
 
 export async function deleteBlog(blog) {
 	const filePath = path.resolve(dirPath, blog.title + '.md');
-	await new Promise((resolve, reject) => {
-		fs.unlink(filePath, (err) => {
-			if (err) reject(err);
-			resolve();
-		});
-	});
 
-	return publishBlog();
+	const isExist = await exists(filePath);
+	if (isExist) {
+		await unlink(filePath);
+		return publishBlog();
+	}
 }
