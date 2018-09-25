@@ -46,7 +46,7 @@ export async function addBlog(blog) {
 	const filePath = path.resolve(dirPath, blog.title + '.md');
 
 	await mkdirs(dirPath);
-	await writeFile(filePath);
+	await writeFile(filePath, getBlogString(blog));
 
 	return publishBlog();
 }
@@ -59,7 +59,7 @@ export async function updateBlog(oldBlog, newBlog) {
 
 	const filePath = path.resolve(dirPath, newBlog.title + '.md');
 	await mkdirs(dirPath);
-	await writeFile(filePath);
+	await writeFile(filePath, getBlogString(newBlog, newBlog.category.name, newBlog.birthtime));
 
 	return publishBlog();
 }
