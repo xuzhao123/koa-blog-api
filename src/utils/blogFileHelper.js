@@ -14,6 +14,7 @@ function getBlogString(blog, category = blog.category, date = new Date()) {
 			tagString += '- ' + tag + '\n';
 		});
 	}
+	blog.blog = blog.blog.replace(/^#\s{1}\S*\s{2,4}/, '');
 	return `---
 title: ${blog.title}
 date: ${stringifyTime(date)}
